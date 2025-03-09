@@ -1,0 +1,6 @@
+{
+  "extends": "@electron-toolkit/tsconfig/tsconfig.json",
+  "compilerOptions": {
+    "moduleResolution": "bundler"
+  }
+}
