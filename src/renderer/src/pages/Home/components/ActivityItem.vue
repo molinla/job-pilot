@@ -8,25 +8,38 @@ const props = defineProps({
   },
 });
 
-const colorClasses = computed(() => {
+// 使用 CSS 变量处理颜色
+const iconStyles = computed(() => {
   switch (props.activity.color) {
-    case "blue":
-      return "bg-blue-500";
-    case "purple":
-      return "bg-purple-500";
-    case "amber":
-      return "bg-amber-500";
-    case "green":
-      return "bg-green-500";
+    case "primary":
+      return {
+        backgroundColor: "var(--primary-color)",
+      };
+    case "secondary":
+      return {
+        backgroundColor: "var(--secondary-color, #8662F2)",
+      };
+    case "accent":
+      return {
+        backgroundColor: "var(--accent-color, #FF8C24)",
+      };
     default:
-      return "bg-blue-500";
+      return {
+        backgroundColor: "var(--primary-color)",
+      };
   }
 });
 
-const statusClasses = computed(() => {
+const statusStyles = computed(() => {
   return props.activity.status === "completed"
-    ? "bg-green-100 text-green-600"
-    : "bg-amber-100 text-amber-600";
+    ? {
+        backgroundColor: "rgba(34, 197, 94, 0.1)", // status.success 的浅色版本
+        color: "rgb(34, 197, 94)", // status.success
+      }
+    : {
+        backgroundColor: "rgba(255, 140, 36, 0.1)", // accent 的浅色版本
+        color: "var(--accent-color, #FF8C24)", // accent
+      };
 });
 
 const statusText = computed(() => {
@@ -49,13 +62,14 @@ const iconMap = computed(() => {
   }
 });
 </script>
+
 <template>
-  <div class="flex items-center p-2.5 bg-gray-50 rounded-lg">
+  <div
+    class="flex items-center p-2.5 bg-gray-50/80 rounded-lg border border-gray-100 transition-all duration-300"
+  >
     <div
-      :class="[
-        'w-8 h-8 rounded-lg flex items-center justify-center text-white shrink-0',
-        colorClasses,
-      ]"
+      class="w-8 h-8 rounded-lg flex items-center justify-center text-white shrink-0 shadow-sm"
+      :style="iconStyles"
     >
       <span class="material-icons" style="font-size: 16px">{{ iconMap }}</span>
     </div>
@@ -68,10 +82,8 @@ const iconMap = computed(() => {
     </div>
 
     <div
-      :class="[
-        'px-1.5 py-0.5 text-[10px] rounded-full shrink-0',
-        statusClasses,
-      ]"
+      class="px-1.5 py-0.5 text-[10px] rounded-full shrink-0 font-medium border"
+      :style="[statusStyles, { borderColor: statusStyles.backgroundColor }]"
     >
       {{ statusText }}
     </div>

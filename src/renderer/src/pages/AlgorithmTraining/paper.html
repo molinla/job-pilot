@@ -1,0 +1,1405 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>求职助手 - 刷题模块</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: {
+                50: "#f0f9ff",
+                100: "#e0f2fe",
+                200: "#bae6fd",
+                300: "#7dd3fc",
+                400: "#38bdf8",
+                500: "#0ea5e9",
+                600: "#0284c7",
+                700: "#0369a1",
+              },
+              success: {
+                50: "#f0fdf4",
+                100: "#dcfce7",
+                200: "#bbf7d0",
+                500: "#22c55e",
+                600: "#16a34a",
+              },
+              warning: {
+                50: "#fff7ed",
+                100: "#ffedd5",
+                500: "#f97316",
+              },
+              danger: {
+                50: "#fef2f2",
+                100: "#fee2e2",
+                500: "#ef4444",
+                600: "#dc2626",
+              },
+            },
+            boxShadow: {
+              paper:
+                "0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06), 0 -1px 0 0 rgba(0, 0, 0, 0.05)",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap");
+      body {
+        font-family: "Noto Sans SC", sans-serif;
+        background-color: #f5f7fa;
+      }
+
+      /* 自定义滚动条样式 */
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: #c1c1c1;
+        border-radius: 20px;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: #a1a1a1;
+      }
+
+      /* 选择题选项动效 */
+      .option-hover {
+        transition: all 0.2s ease;
+      }
+
+      .option-hover:hover:not(.option-disabled) {
+        border-color: #38bdf8;
+        background-color: #f0f9ff;
+      }
+
+      /* 纸张效果 */
+      .paper {
+        background-color: white;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      }
+    </style>
+  </head>
+  <body class="bg-gray-100 text-gray-800">
+    <!-- 主内容区 - 优化的纸张样式 -->
+    <div
+      class="max-w-[210mm] mx-auto bg-white shadow-xl py-12 px-16 min-h-screen paper my-8 rounded-md"
+    >
+      <!-- 试卷标题 -->
+      <div class="text-center mb-10">
+        <h1 class="text-2xl font-bold text-gray-800">
+          Java后端工程师面试题集（A卷）
+        </h1>
+        <div class="text-gray-500 mt-2 text-sm">
+          总分: 100分 &nbsp;|&nbsp; 时间: 120分钟 &nbsp;|&nbsp; 题量: 20题
+        </div>
+        <div class="w-20 h-1 bg-primary-400 mx-auto mt-4 rounded-full"></div>
+      </div>
+
+      <!-- 试卷说明 -->
+      <div
+        class="mb-8 text-sm text-gray-600 border border-gray-100 p-4 rounded-lg bg-gray-50"
+      >
+        <h3 class="font-medium mb-2 flex items-center">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-5 w-5 mr-2 text-primary-500"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+          答题须知：
+        </h3>
+        <ol class="list-decimal pl-6 space-y-1">
+          <li>本试卷共包含单选题、多选题和编程题三种题型。</li>
+          <li>单选题每题4分，多选题每题6分，编程题每题10分。</li>
+          <li>多选题少选得部分分，多选不得分。</li>
+          <li>
+            有<span class="text-danger-500">红色标记</span
+            >的题目为上次做错的题目，请重点关注。
+          </li>
+          <li>
+            点击题目旁的<span class="text-primary-500">AI图标</span
+            >可获取智能解析帮助。
+          </li>
+        </ol>
+      </div>
+
+      <!-- 单选题部分 -->
+      <div class="mb-12">
+        <h2
+          class="text-lg font-semibold text-gray-700 border-b border-gray-200 pb-2 mb-6 flex items-center"
+        >
+          <div class="w-2 h-6 bg-primary-400 rounded-full mr-2"></div>
+          第一部分：单选题（每题4分，共10题）
+        </h2>
+
+        <!-- 单选题1 (标记为错题) -->
+        <div class="mb-8">
+          <div class="font-medium mb-3 flex items-center">
+            <div
+              class="flex items-center justify-center w-6 h-6 rounded-full bg-primary-100 text-primary-600 mr-2 text-sm font-bold"
+            >
+              1
+            </div>
+            <span class="text-gray-700"
+              >在Java中，下列关于接口(Interface)的说法中，错误的是：</span
+            >
+            <span
+              class="inline-flex items-center ml-2 px-2 py-0.5 rounded text-xs font-medium bg-danger-100 text-danger-600"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-3 w-3 mr-0.5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                />
+              </svg>
+              上次错题
+            </span>
+            <button
+              class="ml-auto text-primary-500 hover:text-primary-600"
+              title="AI解析"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
+                />
+              </svg>
+            </button>
+          </div>
+
+          <div class="space-y-2 ml-8">
+            <label
+              class="flex items-center py-2.5 px-3 rounded-lg border border-gray-200 cursor-pointer option-hover"
+            >
+              <input
+                type="radio"
+                name="q1"
+                class="w-4 h-4 text-primary-500 focus:ring-primary-400 mr-2"
+              />
+              <span>A. 接口中可以包含抽象方法</span>
+            </label>
+
+            <label
+              class="flex items-center py-2.5 px-3 rounded-lg border border-primary-300 bg-primary-50 cursor-pointer"
+            >
+              <input
+                type="radio"
+                name="q1"
+                class="w-4 h-4 text-primary-500 focus:ring-primary-400 mr-2"
+                checked
+              />
+              <span>B. 接口中可以包含非静态成员变量</span>
+            </label>
+
+            <label
+              class="flex items-center py-2.5 px-3 rounded-lg border border-gray-200 cursor-pointer option-hover"
+            >
+              <input
+                type="radio"
+                name="q1"
+                class="w-4 h-4 text-primary-500 focus:ring-primary-400 mr-2"
+              />
+              <span>C. 接口中可以包含静态方法</span>
+            </label>
+
+            <label
+              class="flex items-center py-2.5 px-3 rounded-lg border border-gray-200 cursor-pointer option-hover"
+            >
+              <input
+                type="radio"
+                name="q1"
+                class="w-4 h-4 text-primary-500 focus:ring-primary-400 mr-2"
+              />
+              <span>D. 接口中可以包含默认方法(default method)</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- 单选题2 -->
+        <div class="mb-8">
+          <div class="font-medium mb-3 flex items-center">
+            <div
+              class="flex items-center justify-center w-6 h-6 rounded-full bg-primary-100 text-primary-600 mr-2 text-sm font-bold"
+            >
+              2
+            </div>
+            <span class="text-gray-700"
+              >以下哪个不是Spring框架的核心模块？</span
+            >
+            <button
+              class="ml-auto text-primary-500 hover:text-primary-600"
+              title="AI解析"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
+                />
+              </svg>
+            </button>
+          </div>
+
+          <div class="space-y-2 ml-8">
+            <label
+              class="flex items-center py-2.5 px-3 rounded-lg border border-gray-200 cursor-pointer option-hover"
+            >
+              <input
+                type="radio"
+                name="q2"
+                class="w-4 h-4 text-primary-500 focus:ring-primary-400 mr-2"
+              />
+              <span>A. Spring Core</span>
+            </label>
+
+            <label
+              class="flex items-center py-2.5 px-3 rounded-lg border border-gray-200 cursor-pointer option-hover"
+            >
+              <input
+                type="radio"
+                name="q2"
+                class="w-4 h-4 text-primary-500 focus:ring-primary-400 mr-2"
+              />
+              <span>B. Spring AOP</span>
+            </label>
+
+            <label
+              class="flex items-center py-2.5 px-3 rounded-lg border border-primary-300 bg-primary-50 cursor-pointer"
+            >
+              <input
+                type="radio"
+                name="q2"
+                class="w-4 h-4 text-primary-500 focus:ring-primary-400 mr-2"
+                checked
+              />
+              <span>C. Spring Cloud</span>
+            </label>
+
+            <label
+              class="flex items-center py-2.5 px-3 rounded-lg border border-gray-200 cursor-pointer option-hover"
+            >
+              <input
+                type="radio"
+                name="q2"
+                class="w-4 h-4 text-primary-500 focus:ring-primary-400 mr-2"
+              />
+              <span>D. Spring Beans</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- 单选题3 (已完成) -->
+        <div class="mb-8">
+          <div class="font-medium mb-3 flex items-center">
+            <div
+              class="flex items-center justify-center w-6 h-6 rounded-full bg-success-100 text-success-600 mr-2 text-sm font-bold"
+            >
+              3
+            </div>
+            <span class="text-gray-700"
+              >关于线程安全的集合类，以下说法正确的是：</span
+            >
+            <span
+              class="inline-flex items-center ml-2 px-2 py-0.5 rounded text-xs font-medium bg-success-100 text-success-600"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-3 w-3 mr-0.5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+              已完成
+            </span>
+          </div>
+
+          <div class="space-y-2 ml-8">
+            <label
+              class="flex items-center py-2.5 px-3 rounded-lg border border-gray-200 bg-gray-50 opacity-70 cursor-not-allowed option-disabled"
+            >
+              <input
+                type="radio"
+                name="q3"
+                class="w-4 h-4 text-gray-400 focus:ring-gray-400 mr-2"
+                disabled
+              />
+              <span>A. ArrayList是线程安全的</span>
+            </label>
+
+            <label
+              class="flex items-center py-2.5 px-3 rounded-lg border border-success-300 bg-success-50 cursor-not-allowed option-disabled"
+            >
+              <input
+                type="radio"
+                name="q3"
+                class="w-4 h-4 text-success-500 focus:ring-success-400 mr-2"
+                checked
+                disabled
+              />
+              <span>B. ConcurrentHashMap是线程安全的</span>
+            </label>
+
+            <label
+              class="flex items-center py-2.5 px-3 rounded-lg border border-gray-200 bg-gray-50 opacity-70 cursor-not-allowed option-disabled"
+            >
+              <input
+                type="radio"
+                name="q3"
+                class="w-4 h-4 text-gray-400 focus:ring-gray-400 mr-2"
+                disabled
+              />
+              <span>C. LinkedList是线程安全的</span>
+            </label>
+
+            <label
+              class="flex items-center py-2.5 px-3 rounded-lg border border-gray-200 bg-gray-50 opacity-70 cursor-not-allowed option-disabled"
+            >
+              <input
+                type="radio"
+                name="q3"
+                class="w-4 h-4 text-gray-400 focus:ring-gray-400 mr-2"
+                disabled
+              />
+              <span>D. HashSet是线程安全的</span>
+            </label>
+          </div>
+
+          <div
+            class="ml-8 mt-3 p-4 bg-success-50 rounded-lg border border-success-200 text-sm text-gray-700"
+          >
+            <div class="font-medium text-success-600 mb-1.5 flex items-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5 mr-1"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+              答案解析：
+            </div>
+            <p>
+              ArrayList、LinkedList和HashSet都不是线程安全的集合类，在多线程环境下使用可能会导致数据不一致。ConcurrentHashMap是专门为并发环境设计的线程安全的哈希表实现。
+            </p>
+          </div>
+        </div>
+
+        <!-- 单选题4 -->
+        <div class="mb-8">
+          <div class="font-medium mb-3 flex items-center">
+            <div
+              class="flex items-center justify-center w-6 h-6 rounded-full bg-gray-200 text-gray-600 mr-2 text-sm font-bold"
+            >
+              4
+            </div>
+            <span class="text-gray-700"
+              >Java中，以下关于final关键字的说法错误的是：</span
+            >
+            <button
+              class="ml-auto text-primary-500 hover:text-primary-600"
+              title="AI解析"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
+                />
+              </svg>
+            </button>
+          </div>
+
+          <div class="space-y-2 ml-8">
+            <label
+              class="flex items-center py-2.5 px-3 rounded-lg border border-gray-200 cursor-pointer option-hover"
+            >
+              <input
+                type="radio"
+                name="q4"
+                class="w-4 h-4 text-primary-500 focus:ring-primary-400 mr-2"
+              />
+              <span>A. final修饰的类不能被继承</span>
+            </label>
+
+            <label
+              class="flex items-center py-2.5 px-3 rounded-lg border border-gray-200 cursor-pointer option-hover"
+            >
+              <input
+                type="radio"
+                name="q4"
+                class="w-4 h-4 text-primary-500 focus:ring-primary-400 mr-2"
+              />
+              <span>B. final修饰的方法不能被重写</span>
+            </label>
+
+            <label
+              class="flex items-center py-2.5 px-3 rounded-lg border border-gray-200 cursor-pointer option-hover"
+            >
+              <input
+                type="radio"
+                name="q4"
+                class="w-4 h-4 text-primary-500 focus:ring-primary-400 mr-2"
+              />
+              <span>C. final修饰的变量是常量，不能被修改</span>
+            </label>
+
+            <label
+              class="flex items-center py-2.5 px-3 rounded-lg border border-gray-200 cursor-pointer option-hover"
+            >
+              <input
+                type="radio"
+                name="q4"
+                class="w-4 h-4 text-primary-500 focus:ring-primary-400 mr-2"
+              />
+              <span>D. final修饰的对象引用可以指向不同的对象</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- 单选题5 (已完成) -->
+        <div class="mb-8">
+          <div class="font-medium mb-3 flex items-center">
+            <div
+              class="flex items-center justify-center w-6 h-6 rounded-full bg-success-100 text-success-600 mr-2 text-sm font-bold"
+            >
+              5
+            </div>
+            <span class="text-gray-700"
+              >在Java中，下列哪种方式不能实现多线程：</span
+            >
+            <span
+              class="inline-flex items-center ml-2 px-2 py-0.5 rounded text-xs font-medium bg-success-100 text-success-600"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-3 w-3 mr-0.5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+              已完成
+            </span>
+          </div>
+
+          <div class="space-y-2 ml-8">
+            <label
+              class="flex items-center py-2.5 px-3 rounded-lg border border-gray-200 bg-gray-50 opacity-70 cursor-not-allowed option-disabled"
+            >
+              <input
+                type="radio"
+                name="q5"
+                class="w-4 h-4 text-gray-400 focus:ring-gray-400 mr-2"
+                disabled
+              />
+              <span>A. 继承Thread类</span>
+            </label>
+
+            <label
+              class="flex items-center py-2.5 px-3 rounded-lg border border-gray-200 bg-gray-50 opacity-70 cursor-not-allowed option-disabled"
+            >
+              <input
+                type="radio"
+                name="q5"
+                class="w-4 h-4 text-gray-400 focus:ring-gray-400 mr-2"
+                disabled
+              />
+              <span>B. 实现Runnable接口</span>
+            </label>
+
+            <label
+              class="flex items-center py-2.5 px-3 rounded-lg border border-gray-200 bg-gray-50 opacity-70 cursor-not-allowed option-disabled"
+            >
+              <input
+                type="radio"
+                name="q5"
+                class="w-4 h-4 text-gray-400 focus:ring-gray-400 mr-2"
+                disabled
+              />
+              <span>C. 实现Callable接口</span>
+            </label>
+
+            <label
+              class="flex items-center py-2.5 px-3 rounded-lg border border-success-300 bg-success-50 cursor-not-allowed option-disabled"
+            >
+              <input
+                type="radio"
+                name="q5"
+                class="w-4 h-4 text-success-500 focus:ring-success-400 mr-2"
+                checked
+                disabled
+              />
+              <span>D. 实现Serializable接口</span>
+            </label>
+          </div>
+
+          <div
+            class="ml-8 mt-3 p-4 bg-success-50 rounded-lg border border-success-200 text-sm text-gray-700"
+          >
+            <div class="font-medium text-success-600 mb-1.5 flex items-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5 mr-1"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+              答案解析：
+            </div>
+            <p>
+              在Java中创建线程的方式主要有：继承Thread类、实现Runnable接口、实现Callable接口（结合Future使用）。而Serializable接口只是标识接口，用于对象序列化，与多线程无关。
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 多选题部分 -->
+      <div class="mb-12">
+        <h2
+          class="text-lg font-semibold text-gray-700 border-b border-gray-200 pb-2 mb-6 flex items-center"
+        >
+          <div class="w-2 h-6 bg-purple-400 rounded-full mr-2"></div>
+          第二部分：多选题（每题6分，共5题）
+        </h2>
+
+        <!-- 多选题1 -->
+        <div class="mb-8">
+          <div class="font-medium mb-3 flex items-center">
+            <div
+              class="flex items-center justify-center w-6 h-6 rounded-full bg-primary-100 text-primary-600 mr-2 text-sm font-bold"
+            >
+              11
+            </div>
+            <span class="text-gray-700"
+              >关于RESTful API设计原则，下列哪些描述是正确的？</span
+            >
+            <span class="text-gray-500 text-xs ml-1">(多选)</span>
+            <span
+              class="inline-flex items-center ml-2 px-2 py-0.5 rounded text-xs font-medium bg-danger-100 text-danger-600"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-3 w-3 mr-0.5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                />
+              </svg>
+              上次错题
+            </span>
+            <button
+              class="ml-auto text-primary-500 hover:text-primary-600"
+              title="AI解析"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
+                />
+              </svg>
+            </button>
+          </div>
+
+          <div class="space-y-2 ml-8">
+            <label
+              class="flex items-center py-2.5 px-3 rounded-lg border border-primary-300 bg-primary-50 cursor-pointer"
+            >
+              <input
+                type="checkbox"
+                class="w-4 h-4 text-primary-500 focus:ring-primary-400 mr-2"
+                checked
+              />
+              <span
+                >A. 使用HTTP动词（GET、POST、PUT、DELETE等）表示操作类型</span
+              >
+            </label>
+
+            <label
+              class="flex items-center py-2.5 px-3 rounded-lg border border-primary-300 bg-primary-50 cursor-pointer"
+            >
+              <input
+                type="checkbox"
+                class="w-4 h-4 text-primary-500 focus:ring-primary-400 mr-2"
+                checked
+              />
+              <span>B. URI应该表示资源，而不是操作</span>
+            </label>
+
+            <label
+              class="flex items-center py-2.5 px-3 rounded-lg border border-gray-200 cursor-pointer option-hover"
+            >
+              <input
+                type="checkbox"
+                class="w-4 h-4 text-primary-500 focus:ring-primary-400 mr-2"
+              />
+              <span>C. 应该在URI中包含API版本号</span>
+            </label>
+
+            <label
+              class="flex items-center py-2.5 px-3 rounded-lg border border-primary-300 bg-primary-50 cursor-pointer"
+            >
+              <input
+                type="checkbox"
+                class="w-4 h-4 text-primary-500 focus:ring-primary-400 mr-2"
+                checked
+              />
+              <span>D. 使用HTTP状态码表示请求结果</span>
+            </label>
+
+            <label
+              class="flex items-center py-2.5 px-3 rounded-lg border border-gray-200 cursor-pointer option-hover"
+            >
+              <input
+                type="checkbox"
+                class="w-4 h-4 text-primary-500 focus:ring-primary-400 mr-2"
+              />
+              <span>E. 所有API返回结果必须使用XML格式</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- 多选题2 (已完成) -->
+        <div class="mb-8">
+          <div class="font-medium mb-3 flex items-center">
+            <div
+              class="flex items-center justify-center w-6 h-6 rounded-full bg-success-100 text-success-600 mr-2 text-sm font-bold"
+            >
+              12
+            </div>
+            <span class="text-gray-700">在Java中，下列哪些是JVM内存区域？</span>
+            <span class="text-gray-500 text-xs ml-1">(多选)</span>
+            <span
+              class="inline-flex items-center ml-2 px-2 py-0.5 rounded text-xs font-medium bg-success-100 text-success-600"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-3 w-3 mr-0.5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+              已完成
+            </span>
+          </div>
+
+          <div class="space-y-2 ml-8">
+            <label
+              class="flex items-center py-2.5 px-3 rounded-lg border border-success-300 bg-success-50 cursor-not-allowed option-disabled"
+            >
+              <input
+                type="checkbox"
+                class="w-4 h-4 text-success-500 focus:ring-success-400 mr-2"
+                checked
+                disabled
+              />
+              <span>A. 堆区（Heap）</span>
+            </label>
+
+            <label
+              class="flex items-center py-2.5 px-3 rounded-lg border border-success-300 bg-success-50 cursor-not-allowed option-disabled"
+            >
+              <input
+                type="checkbox"
+                class="w-4 h-4 text-success-500 focus:ring-success-400 mr-2"
+                checked
+                disabled
+              />
+              <span>B. 方法区（Method Area）</span>
+            </label>
+
+            <label
+              class="flex items-center py-2.5 px-3 rounded-lg border border-success-300 bg-success-50 cursor-not-allowed option-disabled"
+            >
+              <input
+                type="checkbox"
+                class="w-4 h-4 text-success-500 focus:ring-success-400 mr-2"
+                checked
+                disabled
+              />
+              <span>C. 虚拟机栈（VM Stack）</span>
+            </label>
+
+            <label
+              class="flex items-center py-2.5 px-3 rounded-lg border border-gray-200 bg-gray-50 opacity-70 cursor-not-allowed option-disabled"
+            >
+              <input
+                type="checkbox"
+                class="w-4 h-4 text-gray-400 focus:ring-gray-400 mr-2"
+                disabled
+              />
+              <span>D. 物理内存（Physical Memory）</span>
+            </label>
+
+            <label
+              class="flex items-center py-2.5 px-3 rounded-lg border border-success-300 bg-success-50 cursor-not-allowed option-disabled"
+            >
+              <input
+                type="checkbox"
+                class="w-4 h-4 text-success-500 focus:ring-success-400 mr-2"
+                checked
+                disabled
+              />
+              <span>E. 本地方法栈（Native Method Stack）</span>
+            </label>
+          </div>
+
+          <div
+            class="ml-8 mt-3 p-4 bg-success-50 rounded-lg border border-success-200 text-sm text-gray-700"
+          >
+            <div class="font-medium text-success-600 mb-1.5 flex items-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5 mr-1"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+              答案解析：
+            </div>
+            <p>
+              JVM内存区域主要包括：堆区（Heap）、方法区（Method
+              Area，在JDK8后称为元空间Metaspace）、虚拟机栈（VM
+              Stack）、本地方法栈（Native Method Stack）和程序计数器（PC
+              Register）。物理内存是硬件概念，不属于JVM内存区域。
+            </p>
+          </div>
+        </div>
+
+        <!-- 多选题3 -->
+        <div class="mb-8">
+          <div class="font-medium mb-3 flex items-center">
+            <div
+              class="flex items-center justify-center w-6 h-6 rounded-full bg-primary-100 text-primary-600 mr-2 text-sm font-bold"
+            >
+              13
+            </div>
+            <span class="text-gray-700"
+              >关于数据库事务的ACID特性，下列选项中哪些是正确的？</span
+            >
+            <span class="text-gray-500 text-xs ml-1">(多选)</span>
+            <button
+              class="ml-auto text-primary-500 hover:text-primary-600"
+              title="AI解析"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
+                />
+              </svg>
+            </button>
+          </div>
+
+          <div class="space-y-2 ml-8">
+            <label
+              class="flex items-center py-2.5 px-3 rounded-lg border border-primary-300 bg-primary-50 cursor-pointer"
+            >
+              <input
+                type="checkbox"
+                class="w-4 h-4 text-primary-500 focus:ring-primary-400 mr-2"
+                checked
+              />
+              <span>A. 原子性(Atomicity)表示事务是不可分割的最小执行单位</span>
+            </label>
+
+            <label
+              class="flex items-center py-2.5 px-3 rounded-lg border border-primary-300 bg-primary-50 cursor-pointer"
+            >
+              <input
+                type="checkbox"
+                class="w-4 h-4 text-primary-500 focus:ring-primary-400 mr-2"
+                checked
+              />
+              <span
+                >B.
+                一致性(Consistency)表示事务执行前后，数据库从一个一致性状态变换到另一个一致性状态</span
+              >
+            </label>
+
+            <label
+              class="flex items-center py-2.5 px-3 rounded-lg border border-gray-200 cursor-pointer option-hover"
+            >
+              <input
+                type="checkbox"
+                class="w-4 h-4 text-primary-500 focus:ring-primary-400 mr-2"
+              />
+              <span
+                >C.
+                隔离性(Isolation)表示不同事务之间必须互相影响才能提高并发性能</span
+              >
+            </label>
+
+            <label
+              class="flex items-center py-2.5 px-3 rounded-lg border border-primary-300 bg-primary-50 cursor-pointer"
+            >
+              <input
+                type="checkbox"
+                class="w-4 h-4 text-primary-500 focus:ring-primary-400 mr-2"
+                checked
+              />
+              <span
+                >D.
+                持久性(Durability)表示一旦事务提交，它对数据库的改变是永久性的</span
+              >
+            </label>
+
+            <label
+              class="flex items-center py-2.5 px-3 rounded-lg border border-gray-200 cursor-pointer option-hover"
+            >
+              <input
+                type="checkbox"
+                class="w-4 h-4 text-primary-500 focus:ring-primary-400 mr-2"
+              />
+              <span
+                >E.
+                事务的ACID特性只适用于NoSQL数据库，不适用于关系型数据库</span
+              >
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- 编程题部分 -->
+      <div class="mb-12">
+        <h2
+          class="text-lg font-semibold text-gray-700 border-b border-gray-200 pb-2 mb-6 flex items-center"
+        >
+          <div class="w-2 h-6 bg-orange-400 rounded-full mr-2"></div>
+          第三部分：编程题（每题10分，共5题）
+        </h2>
+
+        <!-- 编程题1 -->
+        <div class="mb-10">
+          <div class="font-medium mb-3 flex items-center">
+            <div
+              class="flex items-center justify-center w-6 h-6 rounded-full bg-primary-100 text-primary-600 mr-2 text-sm font-bold"
+            >
+              16
+            </div>
+            <span class="text-gray-700">LRU缓存机制</span>
+            <button
+              class="ml-auto text-primary-500 hover:text-primary-600"
+              title="AI解析"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
+                />
+              </svg>
+            </button>
+          </div>
+
+          <div class="ml-8">
+            <div class="mb-4 text-sm text-gray-600">
+              <p class="mb-2">
+                设计和实现一个LRU（最近最少使用）缓存机制。它应该支持以下操作：获取数据（get）和写入数据（put）。
+              </p>
+              <ul class="list-disc pl-5 space-y-1 mt-2">
+                <li>
+                  获取数据get(key)：如果关键字(key)存在于缓存中，则获取关键字的值（总是正数），否则返回-1。
+                </li>
+                <li>
+                  写入数据put(key,
+                  value)：如果关键字已经存在，则变更其值；如果不存在，则插入该组「关键字/值」。当缓存容量达到上限时，它应该在写入新数据之前删除最久未使用的数据值，从而为新的数据值留出空间。
+                </li>
+              </ul>
+            </div>
+
+            <div class="rounded-lg overflow-hidden shadow-sm mb-4">
+              <div
+                class="flex justify-between items-center bg-gray-100 px-4 py-2"
+              >
+                <div class="flex items-center">
+                  <select
+                    class="text-sm bg-white border border-gray-300 rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-primary-400 focus:border-transparent"
+                  >
+                    <option selected>Java</option>
+                    <option>Python</option>
+                    <option>C++</option>
+                    <option>JavaScript</option>
+                  </select>
+                  <div class="flex space-x-1 ml-3">
+                    <button
+                      class="text-xs px-2 py-1 bg-white border border-gray-300 rounded-md hover:bg-gray-50 text-gray-700"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-3.5 w-3.5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+                <div class="flex space-x-2">
+                  <button
+                    class="text-xs px-2 py-1 bg-white border border-gray-300 rounded-md hover:bg-gray-50 text-gray-700"
+                  >
+                    格式化
+                  </button>
+                  <button
+                    class="text-xs px-2 py-1 bg-white border border-gray-300 rounded-md hover:bg-gray-50 text-gray-700"
+                  >
+                    重置
+                  </button>
+                </div>
+              </div>
+              <div
+                class="bg-gray-900 text-gray-100 p-4 font-mono text-sm overflow-auto"
+                style="min-height: 200px"
+              >
+                class LRUCache { public LRUCache(int capacity) { //
+                请实现LRU缓存机制 } public int get(int key) { // 获取数据 }
+                public void put(int key, int value) { // 写入数据 } }
+              </div>
+            </div>
+
+            <div
+              class="mb-4 bg-white border border-gray-200 rounded-lg overflow-hidden"
+            >
+              <div class="flex border-b border-gray-200">
+                <button
+                  class="px-4 py-2 border-b-2 border-primary-500 text-primary-600 font-medium text-sm"
+                >
+                  示例输入
+                </button>
+                <button
+                  class="px-4 py-2 text-gray-600 hover:text-gray-900 text-sm"
+                >
+                  运行结果
+                </button>
+              </div>
+              <div
+                class="bg-gray-50 p-3 font-mono text-xs overflow-auto whitespace-pre text-gray-700"
+              >
+                LRUCache cache = new LRUCache(2); cache.put(1, 1); cache.put(2,
+                2); cache.get(1); // 返回 1 cache.put(3, 3); //
+                该操作会使得关键字 2 作废 cache.get(2); // 返回 -1 (未找到)
+                cache.put(4, 4); // 该操作会使得关键字 1 作废 cache.get(1); //
+                返回 -1 (未找到) cache.get(3); // 返回 3 cache.get(4); // 返回 4
+              </div>
+            </div>
+
+            <div class="flex justify-end space-x-3">
+              <button
+                class="px-4 py-1.5 bg-white border border-gray-300 rounded-md text-sm hover:bg-gray-50 transition shadow-sm"
+              >
+                运行代码
+              </button>
+              <button
+                class="px-4 py-1.5 bg-primary-500 hover:bg-primary-600 text-white rounded-md text-sm transition shadow-sm"
+              >
+                提交答案
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 编程题2 (已完成) -->
+        <div class="mb-10">
+          <div class="font-medium mb-3 flex items-center">
+            <div
+              class="flex items-center justify-center w-6 h-6 rounded-full bg-success-100 text-success-600 mr-2 text-sm font-bold"
+            >
+              17
+            </div>
+            <span class="text-gray-700">反转链表</span>
+            <span
+              class="inline-flex items-center ml-2 px-2 py-0.5 rounded text-xs font-medium bg-success-100 text-success-600"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-3 w-3 mr-0.5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+              已完成
+            </span>
+          </div>
+
+          <div class="ml-8">
+            <div class="mb-4 text-sm text-gray-600">
+              <p>
+                给你单链表的头节点 head ，请你反转链表，并返回反转后的链表。
+              </p>
+            </div>
+
+            <div class="rounded-lg overflow-hidden shadow-sm mb-4">
+              <div class="bg-gray-100 px-4 py-2 text-sm text-gray-500">
+                Java 代码（已提交）
+              </div>
+              <div
+                class="bg-gray-900 text-green-400 p-4 font-mono text-sm overflow-auto"
+              >
+                /** * Definition for singly-linked list. * public class ListNode
+                { * int val; * ListNode next; * ListNode() {} * ListNode(int
+                val) { this.val = val; } * ListNode(int val, ListNode next) {
+                this.val = val; this.next = next; } * } */ public class Solution
+                { public ListNode reverseList(ListNode head) { ListNode prev =
+                null; ListNode curr = head; while (curr != null) { ListNode
+                nextTemp = curr.next; curr.next = prev; prev = curr; curr =
+                nextTemp; } return prev; } }
+              </div>
+            </div>
+
+            <div
+              class="p-4 bg-success-50 rounded-lg border border-success-200 text-sm text-gray-700 mb-4"
+            >
+              <div class="font-medium text-success-600 mb-2 flex items-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-5 w-5 mr-1"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+                提交结果：通过
+              </div>
+              <div class="mb-1">
+                <span class="font-medium">执行用时：</span> 0ms,
+                击败了100.00%的Java用户
+              </div>
+              <div class="mb-1">
+                <span class="font-medium">内存消耗：</span> 38.2MB,
+                击败了76.52%的Java用户
+              </div>
+              <div class="mt-3 font-medium">解题思路：</div>
+              <p class="mt-1">
+                该解法使用迭代方式反转链表，时间复杂度为O(n)，空间复杂度为O(1)，是非常高效的解决方案。通过三个指针（prev、curr和nextTemp）在遍历链表的过程中完成反转操作。
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 提交按钮 -->
+      <div class="mt-12 mb-20 flex justify-end">
+        <button
+          class="px-6 py-2.5 bg-primary-500 hover:bg-primary-600 text-white rounded-md transition shadow-md flex items-center"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-5 w-5 mr-1.5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M5 13l4 4L19 7"
+            />
+          </svg>
+          提交试卷
+        </button>
+      </div>
+    </div>
+
+    <!-- 悬浮答题卡片 -->
+    <div
+      class="fixed bottom-6 right-6 bg-white rounded-xl shadow-xl p-5 w-64 border border-gray-100"
+    >
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="font-semibold text-gray-700">答题卡</h3>
+        <span class="text-sm text-primary-600 font-medium">9/20</span>
+      </div>
+
+      <div class="w-full bg-gray-200 rounded-full h-2 mb-5">
+        <div class="bg-primary-500 h-2 rounded-full" style="width: 45%"></div>
+      </div>
+
+      <!-- 单选题区域 -->
+      <div class="mb-5">
+        <h4 class="text-xs font-medium text-gray-500 mb-2 flex items-center">
+          <div class="w-2 h-2 bg-primary-400 rounded-full mr-1.5"></div>
+          单选题
+        </h4>
+        <div class="flex flex-wrap gap-1.5">
+          <span
+            class="inline-flex items-center justify-center w-7 h-7 bg-primary-500 text-white text-xs rounded-md shadow-sm"
+            >1</span
+          >
+          <span
+            class="inline-flex items-center justify-center w-7 h-7 bg-primary-500 text-white text-xs rounded-md shadow-sm"
+            >2</span
+          >
+          <span
+            class="inline-flex items-center justify-center w-7 h-7 bg-success-500 text-white text-xs rounded-md shadow-sm"
+            >3</span
+          >
+          <span
+            class="inline-flex items-center justify-center w-7 h-7 bg-gray-200 text-gray-600 text-xs rounded-md shadow-sm"
+            >4</span
+          >
+          <span
+            class="inline-flex items-center justify-center w-7 h-7 bg-success-500 text-white text-xs rounded-md shadow-sm"
+            >5</span
+          >
+          <span
+            class="inline-flex items-center justify-center w-7 h-7 bg-gray-200 text-gray-600 text-xs rounded-md shadow-sm"
+            >6</span
+          >
+          <span
+            class="inline-flex items-center justify-center w-7 h-7 bg-primary-500 text-white text-xs rounded-md shadow-sm"
+            >7</span
+          >
+          <span
+            class="inline-flex items-center justify-center w-7 h-7 bg-gray-200 text-gray-600 text-xs rounded-md shadow-sm"
+            >8</span
+          >
+          <span
+            class="inline-flex items-center justify-center w-7 h-7 bg-gray-200 text-gray-600 text-xs rounded-md shadow-sm"
+            >9</span
+          >
+          <span
+            class="inline-flex items-center justify-center w-7 h-7 bg-gray-200 text-gray-600 text-xs rounded-md shadow-sm"
+            >10</span
+          >
+        </div>
+      </div>
+
+      <!-- 多选题区域 -->
+      <div class="mb-5">
+        <h4 class="text-xs font-medium text-gray-500 mb-2 flex items-center">
+          <div class="w-2 h-2 bg-purple-400 rounded-full mr-1.5"></div>
+          多选题
+        </h4>
+        <div class="flex flex-wrap gap-1.5">
+          <span
+            class="inline-flex items-center justify-center w-7 h-7 bg-primary-500 text-white text-xs rounded-md shadow-sm"
+            >11</span
+          >
+          <span
+            class="inline-flex items-center justify-center w-7 h-7 bg-success-500 text-white text-xs rounded-md shadow-sm"
+            >12</span
+          >
+          <span
+            class="inline-flex items-center justify-center w-7 h-7 bg-primary-500 text-white text-xs rounded-md shadow-sm"
+            >13</span
+          >
+          <span
+            class="inline-flex items-center justify-center w-7 h-7 bg-gray-200 text-gray-600 text-xs rounded-md shadow-sm"
+            >14</span
+          >
+          <span
+            class="inline-flex items-center justify-center w-7 h-7 bg-gray-200 text-gray-600 text-xs rounded-md shadow-sm"
+            >15</span
+          >
+        </div>
+      </div>
+
+      <!-- 编程题区域 -->
+      <div class="mb-5">
+        <h4 class="text-xs font-medium text-gray-500 mb-2 flex items-center">
+          <div class="w-2 h-2 bg-orange-400 rounded-full mr-1.5"></div>
+          编程题
+        </h4>
+        <div class="flex flex-wrap gap-1.5">
+          <span
+            class="inline-flex items-center justify-center w-7 h-7 bg-primary-500 text-white text-xs rounded-md shadow-sm"
+            >16</span
+          >
+          <span
+            class="inline-flex items-center justify-center w-7 h-7 bg-success-500 text-white text-xs rounded-md shadow-sm"
+            >17</span
+          >
+          <span
+            class="inline-flex items-center justify-center w-7 h-7 bg-gray-200 text-gray-600 text-xs rounded-md shadow-sm"
+            >18</span
+          >
+          <span
+            class="inline-flex items-center justify-center w-7 h-7 bg-gray-200 text-gray-600 text-xs rounded-md shadow-sm"
+            >19</span
+          >
+          <span
+            class="inline-flex items-center justify-center w-7 h-7 bg-gray-200 text-gray-600 text-xs rounded-md shadow-sm"
+            >20</span
+          >
+        </div>
+      </div>
+
+      <div class="flex justify-between items-center text-xs text-gray-500 mb-4">
+        <div class="flex items-center">
+          <span
+            class="w-3 h-3 inline-block bg-primary-500 rounded-md mr-1"
+          ></span>
+          <span>进行中</span>
+        </div>
+        <div class="flex items-center">
+          <span
+            class="w-3 h-3 inline-block bg-success-500 rounded-md mr-1"
+          ></span>
+          <span>已完成</span>
+        </div>
+        <div class="flex items-center">
+          <span class="w-3 h-3 inline-block bg-gray-200 rounded-md mr-1"></span>
+          <span>未开始</span>
+        </div>
+      </div>
+
+      <button
+        class="w-full py-2.5 bg-primary-500 hover:bg-primary-600 text-white text-sm rounded-lg transition shadow-sm flex items-center justify-center"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-4 w-4 mr-1.5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M5 13l4 4L19 7"
+          />
+        </svg>
+        提交试卷
+      </button>
+    </div>
+  </body>
+</html>
