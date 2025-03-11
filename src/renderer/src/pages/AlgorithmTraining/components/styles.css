@@ -1,22 +1,3 @@
-/* 自定义滚动条样式 */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #c1c1c1;
-  border-radius: 20px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #a1a1a1;
-}
-
 /* 选择题选项动效 */
 .option-hover {
   transition: all 0.2s ease;

@@ -15,7 +15,7 @@ onMounted(() => {
     <!-- 头部导航 - 高度优化为紧凑型 -->
     <header
       style="-webkit-app-region: drag"
-      class="flex justify-between items-center px-4 py-2 bg-white/50 backdrop-blur-sm border-b border-gray-100 shadow-sm relative z-50"
+      class="flex justify-between items-center px-4 py-2 bg-white/50 backdrop-blur-sm border-b border-gray-100 relative z-50"
     >
       <div
         :class="[

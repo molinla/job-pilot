@@ -1,7 +1,8 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 import type { RouteRecordRaw } from "vue-router";
 import Home from "../pages/Home/index.vue";
-import AlgorithmTraining from "../pages/AlgorithmTraining/index.vue";
+import PaperList from "../pages/AlgorithmTraining/components/PaperList.vue";
+import PaperView from "../pages/AlgorithmTraining/components/PaperView.vue";
 import MockInterview from "../pages/MockInterview/index.vue";
 import InterviewReview from "../pages/InterviewReview/index.vue";
 import InterviewRecording from "../pages/InterviewRecording/index.vue";
@@ -18,9 +19,17 @@ const routes: RouteRecordRaw[] = [
   {
     path: "/algorithm-training",
     name: "AlgorithmTraining",
-    component: AlgorithmTraining,
+    component: PaperList,
     meta: {
-      title: "刷题训练",
+      title: "题库",
+    },
+  },
+  {
+    path: "/algorithm-training/paper/:id",
+    name: "PaperView",
+    component: PaperView,
+    meta: {
+      title: "答题",
     },
   },
   {

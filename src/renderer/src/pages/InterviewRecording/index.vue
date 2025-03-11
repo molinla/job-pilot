@@ -53,3 +53,11 @@ const goBack = () => {
     </div>
   </div>
 </template>
+
+<style scoped>
+.vertical-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+</style>

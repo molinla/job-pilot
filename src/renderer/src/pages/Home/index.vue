@@ -4,7 +4,6 @@ import * as echarts from "echarts";
 import StepCard from "./components/StepCard.vue";
 import ActivityItem from "./components/ActivityItem.vue";
 import InterviewReviewItem from "./components/InterviewReviewItem.vue";
-import StudyPlanItem from "./components/StudyPlanItem.vue";
 import { appTheme } from "../../config/theme";
 
 defineOptions({
@@ -409,6 +408,51 @@ const studyPlans = ref([
   },
 ]);
 
+// V2EX新闻数据
+const v2exNews = ref([
+  {
+    id: 1,
+    title: "平没有见到过包含输入法接口的",
+    time: "1小时前",
+  },
+  {
+    id: 2,
+    title: "发现一关于工作的一个现象",
+    time: "1小时前",
+  },
+  {
+    id: 3,
+    title:
+      "「我的第一个 AI 网站」上线了，只需传一张图就可以生成 AI 写真（新用户免费体验）",
+    time: "2小时前",
+  },
+  {
+    id: 4,
+    title: "使用 home-assistant 控制显示器亮度/音量/输入源",
+    time: "2小时前",
+  },
+  {
+    id: 5,
+    title: "写了个关于年假的小程序-1",
+    time: "2小时前",
+  },
+  {
+    id: 6,
+    title: "有 V2EX 帖子内容总结类浏览器扩展吗?",
+    time: "3小时前",
+  },
+  {
+    id: 7,
+    title: "如果 go、node、c#学一个推荐哪个?",
+    time: "4小时前",
+  },
+  {
+    id: 8,
+    title: "一个油猴脚本，用于过滤 github 资源列表",
+    time: "4小时前",
+  },
+]);
+
 // 切换面试卡片展开状态
 const toggleInterviewExpand = (interview) => {
   interview.expanded = !interview.expanded;
@@ -447,7 +491,7 @@ const toggleInterviewExpand = (interview) => {
     >
       <!-- 个人信息卡片 - 占据左侧列的全部高度 -->
       <div
-        class="row-span-full rounded-xl shadow-lg p-4 flex flex-col text-white overflow-hidden relative backdrop-blur-sm transform transition-all duration-300 hover:shadow-xl"
+        class="row-span-full rounded-xl shadow-sm p-4 flex flex-col text-white overflow-hidden relative backdrop-blur-sm transform transition-all duration-300 hover:shadow"
         :style="`background-image: linear-gradient(to bottom, ${appTheme.primary.medium}, ${appTheme.primary.dark})`"
       >
         <!-- 卡片内部光晕效果 -->
@@ -528,7 +572,7 @@ const toggleInterviewExpand = (interview) => {
             v-for="step in steps"
             :key="step.id"
             :step="step"
-            class="flex-1 transform transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+            class="flex-1 transform transition-all duration-300 hover:-translate-y-1 hover:shadow"
             :style="{
               '--primary-color': appTheme.primary.base,
               '--hover-color': appTheme.primary.dark,
@@ -539,7 +583,11 @@ const toggleInterviewExpand = (interview) => {
 
         <!-- 近期活动 -->
         <div
-          class="flex-1 bg-white/90 backdrop-blur-sm rounded-xl border border-gray-100 shadow-md flex flex-col overflow-hidden transform transition-all duration-300 hover:shadow-lg"
+          class="flex-1 bg-white/95 backdrop-blur-sm rounded-xl flex flex-col overflow-hidden transform transition-all duration-300 hover:shadow-sm"
+          style="
+            border: 1px solid rgba(240, 240, 240, 1);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+          "
         >
           <div
             class="px-4 py-2.5 border-b border-gray-100"
@@ -572,7 +620,11 @@ const toggleInterviewExpand = (interview) => {
 
         <!-- 求职进度条 - Boss血条风格 -->
         <div
-          class="bg-white/90 backdrop-blur-sm rounded-xl border border-gray-100 shadow-md p-3 transform transition-all duration-300 hover:shadow-lg"
+          class="bg-white/95 backdrop-blur-sm rounded-xl p-3 transform transition-all duration-300 hover:shadow-sm"
+          style="
+            border: 1px solid rgba(240, 240, 240, 1);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+          "
         >
           <div class="flex justify-between items-center mb-4">
             <div class="flex items-center">
@@ -701,8 +753,12 @@ const toggleInterviewExpand = (interview) => {
       <div class="flex flex-col gap-4 h-full">
         <!-- 待复盘面试 -->
         <div
-          class="bg-white/90 backdrop-blur-sm rounded-xl border border-gray-100 shadow-md overflow-hidden flex flex-col transform transition-all duration-300 hover:shadow-lg"
-          style="flex: 0 0 auto"
+          class="bg-white/95 backdrop-blur-sm rounded-xl overflow-hidden flex flex-col transform transition-all duration-300 hover:shadow-sm"
+          style="
+            flex: 0 0 auto;
+            border: 1px solid rgba(240, 240, 240, 1);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+          "
         >
           <div
             class="px-4 py-2.5 border-b"
@@ -734,36 +790,128 @@ const toggleInterviewExpand = (interview) => {
           </div>
         </div>
 
-        <!-- 今日学习计划 -->
-        <div
-          class="flex-1 bg-white/90 backdrop-blur-sm rounded-xl border border-gray-100 shadow-md overflow-hidden flex flex-col transform transition-all duration-300 hover:shadow-lg"
-        >
+        <!-- V2EX 新闻小组件 (替换原来的今日学习计划) -->
+        <div class="flex-1 flex items-start justify-center">
           <div
-            class="px-4 py-2.5 border-b"
-            :style="`border-color: ${appTheme.neutral[200]}`"
+            class="w-full bg-gray-200 rounded-xl overflow-hidden transform transition-all duration-300 hover:shadow-sm"
+            style="
+              border: 1px solid rgba(235, 235, 235, 1);
+              box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+            "
           >
-            <h2
-              class="text-base font-semibold"
-              :style="`color: ${appTheme.neutral[800]}`"
-            >
-              今日学习计划
-            </h2>
-          </div>
+            <!-- 小组件头部 -->
+            <div class="px-2.5 py-1.5 flex items-center justify-between">
+              <!-- 左侧：头像和名称 -->
+              <div class="flex items-center">
+                <div
+                  class="w-6 h-6 bg-black rounded-full flex items-center justify-center"
+                >
+                  <span class="text-white text-[10px] font-bold">V2EX</span>
+                </div>
+                <div class="ml-1.5">
+                  <div class="text-sm font-bold text-gray-800 leading-tight">
+                    V2EX
+                  </div>
+                  <div class="text-[10px] text-gray-600 leading-tight">
+                    刚刚更新
+                  </div>
+                </div>
+              </div>
 
-          <div
-            class="p-3 flex-1 overflow-y-auto overflow-x-hidden snap-y snap-mandatory"
-          >
-            <StudyPlanItem
-              v-for="plan in studyPlans"
-              :key="plan.id"
-              :plan="plan"
-              class="mb-2 last:mb-0 snap-start transform transition-all duration-300 hover:-translate-x-1 hover:shadow-md"
-              :style="{
-                '--primary-color': appTheme.primary.base,
-                '--success-color': appTheme.status.success,
-                '--accent-color': appTheme.accent.base,
-              }"
-            />
+              <!-- 右侧：标签 -->
+              <div
+                class="bg-blue-100 text-blue-800 px-1.5 py-0.5 rounded text-[10px]"
+              >
+                最新分享
+              </div>
+            </div>
+
+            <!-- 新闻列表容器 -->
+            <div
+              class="bg-white rounded-lg mx-2 mb-1.5 overflow-hidden"
+              style="
+                border: 1px solid rgba(245, 245, 245, 1);
+                box-shadow: 0 1px 1px rgba(0, 0, 0, 0.02);
+              "
+            >
+              <!-- 新闻列表 -->
+              <div class="divide-y divide-gray-100 h-full overflow-y-auto">
+                <div
+                  v-for="news in v2exNews"
+                  :key="news.id"
+                  class="px-2.5 py-1.5 hover:bg-gray-50 transition-colors duration-200"
+                >
+                  <div
+                    class="text-xs font-medium text-gray-900 leading-tight line-clamp-1"
+                  >
+                    {{ news.title }}
+                  </div>
+                  <div class="text-[10px] text-gray-400 mt-0.5">
+                    {{ news.time }}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 小组件控制按钮 -->
+            <div class="flex justify-end px-2.5 pb-1.5">
+              <div class="flex space-x-2">
+                <button
+                  class="text-gray-400 hover:text-gray-600 transition-colors duration-200"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-3.5 w-3.5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                    />
+                  </svg>
+                </button>
+                <button
+                  class="text-gray-400 hover:text-gray-600 transition-colors duration-200"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-3.5 w-3.5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
+                    />
+                  </svg>
+                </button>
+                <button
+                  class="text-gray-400 hover:text-gray-600 transition-colors duration-200"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-3.5 w-3.5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>

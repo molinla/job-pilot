@@ -1,12 +1,16 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-import { useRouter } from "vue-router";
-import { appTheme } from "../../config/theme";
-import ExamPaper from "./components/ExamPaper.vue";
+import { useRouter, useRoute } from "vue-router";
+import { appTheme } from "../../../config/theme";
+import ExamPaper from "./ExamPaper.vue";
 
 defineOptions({
-  name: "AlgorithmTraining",
+  name: "PaperView",
 });
+
+const router = useRouter();
+const route = useRoute();
+const examId = ref(route.params.id);
 
 // 定义题目类型
 interface BaseQuestion {
@@ -48,24 +52,6 @@ interface Exam {
   multipleChoiceQuestions: ChoiceQuestion[];
   codingQuestions: CodingQuestion[];
 }
-
-const router = useRouter();
-const pageTitle = ref("刷题训练");
-
-const goBack = () => {
-  router.push("/");
-};
-
-// 导航到试卷列表
-const goToPapers = () => {
-  router.push("/algorithm-training/papers");
-};
-
-// 其他功能区域的导航
-const goToOtherFeature = (feature: string) => {
-  console.log(`导航到: ${feature}`);
-  // 这里可以添加其他功能区域的导航逻辑
-};
 
 // 模拟试卷数据
 const examData = ref<Exam>({
@@ -177,13 +163,23 @@ onMounted(() => {
     ...examData.value.codingQuestions,
   ];
   examData.value.questions = allQuestions;
+
+  // 在实际应用中，这里应该根据 examId 从服务器获取试卷数据
+  console.log(`加载试卷ID: ${examId.value}`);
 });
 
 // 处理试卷提交
 const handleSubmit = (answers: Record<string, string | string[]>) => {
   console.log("提交的答案:", answers);
   // 这里可以添加提交逻辑，如发送到服务器等
-  alert("试卷提交成功！");
+  alert("答题完成！");
+  // 返回题库
+  router.push("/algorithm-training");
+};
+
+// 返回试卷列表
+const goBack = () => {
+  router.push("/algorithm-training");
 };
 </script>
 
@@ -202,6 +198,7 @@ const handleSubmit = (answers: Record<string, string | string[]>) => {
     </div>
 
     <div class="relative z-10 p-4">
+      <!-- 返回按钮 -->
       <div class="flex items-center mb-4">
         <button
           class="cursor-pointer mr-3 size-8 text-center vertical-center p-1.5 rounded-full bg-white/80 hover:bg-white shadow-sm transition-all duration-200"
@@ -210,107 +207,7 @@ const handleSubmit = (answers: Record<string, string | string[]>) => {
         >
           <span class="material-icons" style="font-size: 20px">arrow_back</span>
         </button>
-        <h1
-          class="text-2xl font-bold"
-          :style="`color: ${appTheme.primary.dark}`"
-        >
-          {{ pageTitle }}
-        </h1>
-      </div>
-
-      <!-- 功能区域 -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-        <!-- 试卷库 -->
-        <div
-          @click="goToPapers"
-          class="bg-white/90 backdrop-blur-sm rounded-xl border border-gray-100 shadow-md p-6 cursor-pointer hover:shadow-lg transition-shadow"
-        >
-          <div class="flex items-center mb-3">
-            <div
-              class="w-10 h-10 rounded-full flex items-center justify-center mr-3"
-              :style="`background-color: ${appTheme.primary.light}`"
-            >
-              <span
-                class="material-icons"
-                :style="`color: ${appTheme.primary.base}`"
-                >description</span
-              >
-            </div>
-            <h2 class="text-lg font-semibold">题库</h2>
-          </div>
-          <p class="text-sm text-gray-600">
-            浏览各种类型的题目集合，包括前端、后端、算法等多个方向，选择题目开始练习。
-          </p>
-        </div>
-
-        <!-- 其他功能区域 -->
-        <div
-          @click="goToOtherFeature('每日一题')"
-          class="bg-white/90 backdrop-blur-sm rounded-xl border border-gray-100 shadow-md p-6 cursor-pointer hover:shadow-lg transition-shadow"
-        >
-          <div class="flex items-center mb-3">
-            <div
-              class="w-10 h-10 rounded-full flex items-center justify-center mr-3"
-              :style="`background-color: ${appTheme.primary.light}`"
-            >
-              <span
-                class="material-icons"
-                :style="`color: ${appTheme.primary.base}`"
-                >today</span
-              >
-            </div>
-            <h2 class="text-lg font-semibold">每日一题</h2>
-          </div>
-          <p class="text-sm text-gray-600">
-            每天一道精选题目，持续提升你的编程能力和解题思路。
-          </p>
-        </div>
-
-        <!-- 错题集 -->
-        <div
-          @click="goToOtherFeature('错题集')"
-          class="bg-white/90 backdrop-blur-sm rounded-xl border border-gray-100 shadow-md p-6 cursor-pointer hover:shadow-lg transition-shadow"
-        >
-          <div class="flex items-center mb-3">
-            <div
-              class="w-10 h-10 rounded-full flex items-center justify-center mr-3"
-              :style="`background-color: ${appTheme.primary.light}`"
-            >
-              <span
-                class="material-icons"
-                :style="`color: ${appTheme.primary.base}`"
-                >error_outline</span
-              >
-            </div>
-            <h2 class="text-lg font-semibold">错题集</h2>
-          </div>
-          <p class="text-sm text-gray-600">
-            查看你做错的题目，针对性地进行复习和强化训练。
-          </p>
-        </div>
-
-        <!-- 学习计划 -->
-        <div
-          @click="goToOtherFeature('学习计划')"
-          class="bg-white/90 backdrop-blur-sm rounded-xl border border-gray-100 shadow-md p-6 cursor-pointer hover:shadow-lg transition-shadow"
-        >
-          <div class="flex items-center mb-3">
-            <div
-              class="w-10 h-10 rounded-full flex items-center justify-center mr-3"
-              :style="`background-color: ${appTheme.primary.light}`"
-            >
-              <span
-                class="material-icons"
-                :style="`color: ${appTheme.primary.base}`"
-                >schedule</span
-              >
-            </div>
-            <h2 class="text-lg font-semibold">学习计划</h2>
-          </div>
-          <p class="text-sm text-gray-600">
-            根据你的目标和水平，定制专属的学习计划和刷题路径。
-          </p>
-        </div>
+        <h1 class="text-xl font-bold text-gray-800">答题</h1>
       </div>
 
       <!-- 试卷组件 -->

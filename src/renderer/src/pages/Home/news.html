@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>紧凑版 V2EX 风格新闻小组件</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100 p-4 flex items-center justify-center min-h-screen">
+    <!-- 紧凑版 V2EX 风格新闻小组件 -->
+    <div class="w-72 bg-gray-200 rounded-xl shadow-lg overflow-hidden">
+      <!-- 小组件头部 -->
+      <div class="px-3 py-2 flex items-center justify-between">
+        <!-- 左侧：头像和名称 -->
+        <div class="flex items-center">
+          <div
+            class="w-8 h-8 bg-black rounded-full flex items-center justify-center"
+          >
+            <span class="text-white text-xs font-bold">V2EX</span>
+          </div>
+          <div class="ml-2">
+            <div class="text-base font-bold text-gray-800 leading-tight">
+              V2EX
+            </div>
+            <div class="text-xs text-gray-600 leading-tight">刚刚更新</div>
+          </div>
+        </div>
+
+        <!-- 右侧：标签 -->
+        <div class="bg-blue-100 text-blue-800 px-1.5 py-0.5 rounded text-xs">
+          最新分享
+        </div>
+      </div>
+
+      <!-- 新闻列表容器 -->
+      <div class="bg-white rounded-lg mx-2 mb-2 overflow-hidden shadow-sm">
+        <!-- 新闻列表 -->
+        <div class="divide-y divide-gray-100">
+          <!-- 新闻项 1 -->
+          <div class="px-3 py-2">
+            <div class="text-sm font-medium text-gray-900 leading-tight">
+              平没有见到过包含输入法接口的
+            </div>
+            <div class="text-xs text-gray-400 mt-0.5">1小时前</div>
+          </div>
+
+          <!-- 新闻项 2 -->
+          <div class="px-3 py-2">
+            <div class="text-sm font-medium text-gray-900 leading-tight">
+              发现一关于工作的一个现象
+            </div>
+            <div class="text-xs text-gray-400 mt-0.5">1小时前</div>
+          </div>
+
+          <!-- 新闻项 3 -->
+          <div class="px-3 py-2">
+            <div
+              class="text-sm font-medium text-gray-900 leading-tight line-clamp-2"
+            >
+              「我的第一个 AI 网站」上线了，只需传一张图就可以生成 AI
+              写真（新用户免费体验）
+            </div>
+            <div class="text-xs text-gray-400 mt-0.5">2小时前</div>
+          </div>
+
+          <!-- 新闻项 4 -->
+          <div class="px-3 py-2">
+            <div class="text-sm font-medium text-gray-900 leading-tight">
+              使用 home-assistant 控制显示器亮度/音量/输入源
+            </div>
+            <div class="text-xs text-gray-400 mt-0.5">2小时前</div>
+          </div>
+
+          <!-- 新闻项 5 -->
+          <div class="px-3 py-2">
+            <div class="text-sm font-medium text-gray-900 leading-tight">
+              写了个关于年假的小程序-1
+            </div>
+            <div class="text-xs text-gray-400 mt-0.5">2小时前</div>
+          </div>
+
+          <!-- 新闻项 6 -->
+          <div class="px-3 py-2">
+            <div class="text-sm font-medium text-gray-900 leading-tight">
+              有 V2EX 帖子内容总结类浏览器扩展吗?
+            </div>
+            <div class="text-xs text-gray-400 mt-0.5">3小时前</div>
+          </div>
+
+          <!-- 新闻项 7 -->
+          <div class="px-3 py-2">
+            <div class="text-sm font-medium text-gray-900 leading-tight">
+              如果 go、node、c#学一个推荐哪个?
+            </div>
+            <div class="text-xs text-gray-400 mt-0.5">4小时前</div>
+          </div>
+
+          <!-- 新闻项 8 -->
+          <div class="px-3 py-2">
+            <div class="text-sm font-medium text-gray-900 leading-tight">
+              一个油猴脚本，用于过滤 github 资源列表
+            </div>
+            <div class="text-xs text-gray-400 mt-0.5">4小时前</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 小组件控制按钮 -->
+      <div class="flex justify-end px-3 pb-2">
+        <div class="flex space-x-3">
+          <button class="text-gray-400">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-4 w-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+              />
+            </svg>
+          </button>
+          <button class="text-gray-400">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-4 w-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
+              />
+            </svg>
+          </button>
+          <button class="text-gray-400">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-4 w-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
