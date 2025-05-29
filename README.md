@@ -35,6 +35,28 @@ $ pnpm install
 $ npm install
 ```
 
+### 环境变量配置
+
+在项目根目录下，将 `.env.example` 复制为 `.env` 文件，并配置必要的环境变量：
+
+```bash
+cp .env.example .env
+```
+
+然后编辑 `.env` 文件，添加您的 OpenAI API 密钥：
+
+```env
+# OpenAI API Configuration
+VITE_OPENAI_API_KEY=sk-your-actual-openai-api-key-here
+VITE_OPENAI_API_URL=https://api.openai.com/v1/chat/completions
+```
+
+**重要提醒：**
+
+- 请确保您拥有有效的 OpenAI API 密钥
+- 不要将包含真实 API 密钥的 `.env` 文件提交到 Git 仓库
+- `.env` 文件已被添加到 `.gitignore` 中以防止意外提交
+
 ### 开发模式
 
 ```bash
