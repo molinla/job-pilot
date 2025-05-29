@@ -2,99 +2,103 @@
 import { ref, computed } from "vue";
 
 const props = defineProps({
-  interview: {
-    type: Object,
-    required: true,
-  },
+	interview: {
+		type: Object,
+		required: true,
+	},
 });
 
 const emit = defineEmits(["toggle-expand"]);
 
-const logoUrl = ref(`https://logo.clearbit.com/${props.interview.logo}`);
+const logoUrl = ref(
+	props.interview.logo
+		? `https://logo.clearbit.com/${props.interview.logo}`
+		: `https://ui-avatars.com/api/?name=${props.interview.company.charAt(0)}&background=f59e0b&color=fff&size=36`,
+);
 
 // 处理图片加载失败
 const handleImageError = () => {
-  const nameInitial = props.interview.company.charAt(0);
-  logoUrl.value = `https://ui-avatars.com/api/?name=${nameInitial}&background=f59e0b&color=fff&size=36`;
+	const nameInitial = props.interview.company.charAt(0);
+	logoUrl.value = `https://ui-avatars.com/api/?name=${nameInitial}&background=f59e0b&color=fff&size=36`;
 };
 
 // 切换展开状态
 const toggleExpand = () => {
-  emit("toggle-expand", props.interview);
+	emit("toggle-expand", props.interview);
 };
 
 // 根据状态计算样式
 const statusStyle = computed(() => {
-  switch (props.interview.status) {
-    case "待复盘":
-      return {
-        backgroundColor: "rgba(255, 140, 36, 0.1)",
-        color: "var(--accent-color, #FF8C24)",
-        borderColor: "rgba(255, 140, 36, 0.2)",
-      };
-    case "已复盘":
-      return {
-        backgroundColor: "rgba(34, 197, 94, 0.1)",
-        color: "rgb(34, 197, 94)",
-        borderColor: "rgba(34, 197, 94, 0.2)",
-      };
-    case "需改进":
-      return {
-        backgroundColor: "rgba(239, 68, 68, 0.1)",
-        color: "rgb(239, 68, 68)",
-        borderColor: "rgba(239, 68, 68, 0.2)",
-      };
-    default:
-      return {
-        backgroundColor: "rgba(255, 140, 36, 0.1)",
-        color: "var(--accent-color, #FF8C24)",
-        borderColor: "rgba(255, 140, 36, 0.2)",
-      };
-  }
+	switch (props.interview.status) {
+		case "待复盘":
+			return {
+				backgroundColor: "rgba(255, 140, 36, 0.1)",
+				color: "var(--accent-color, #FF8C24)",
+				borderColor: "rgba(255, 140, 36, 0.2)",
+			};
+		case "已复盘":
+			return {
+				backgroundColor: "rgba(34, 197, 94, 0.1)",
+				color: "rgb(34, 197, 94)",
+				borderColor: "rgba(34, 197, 94, 0.2)",
+			};
+		case "需改进":
+			return {
+				backgroundColor: "rgba(239, 68, 68, 0.1)",
+				color: "rgb(239, 68, 68)",
+				borderColor: "rgba(239, 68, 68, 0.2)",
+			};
+		default:
+			return {
+				backgroundColor: "rgba(255, 140, 36, 0.1)",
+				color: "var(--accent-color, #FF8C24)",
+				borderColor: "rgba(255, 140, 36, 0.2)",
+			};
+	}
 });
 
 // 计算卡片背景样式
 const cardStyle = computed(() => {
-  switch (props.interview.status) {
-    case "待复盘":
-      return {
-        backgroundColor: "rgba(255, 140, 36, 0.03)",
-      };
-    case "已复盘":
-      return {
-        backgroundColor: "rgba(34, 197, 94, 0.03)",
-      };
-    case "需改进":
-      return {
-        backgroundColor: "rgba(239, 68, 68, 0.03)",
-      };
-    default:
-      return {
-        backgroundColor: "white",
-      };
-  }
+	switch (props.interview.status) {
+		case "待复盘":
+			return {
+				backgroundColor: "rgba(255, 140, 36, 0.03)",
+			};
+		case "已复盘":
+			return {
+				backgroundColor: "rgba(34, 197, 94, 0.03)",
+			};
+		case "需改进":
+			return {
+				backgroundColor: "rgba(239, 68, 68, 0.03)",
+			};
+		default:
+			return {
+				backgroundColor: "white",
+			};
+	}
 });
 
 // 计算评分颜色
 const scoreStyle = computed(() => {
-  const score = props.interview.score;
-  if (score >= 80) return { color: "rgb(34, 197, 94)" };
-  if (score >= 60) return { color: "var(--accent-color, #FF8C24)" };
-  return { color: "rgb(239, 68, 68)" };
+	const score = props.interview.score;
+	if (score >= 80) return { color: "rgb(34, 197, 94)" };
+	if (score >= 60) return { color: "var(--accent-color, #FF8C24)" };
+	return { color: "rgb(239, 68, 68)" };
 });
 
 // 计算点的样式
 const pointStyle = computed(() => {
-  switch (props.interview.status) {
-    case "待复盘":
-      return { backgroundColor: "var(--accent-color, #FF8C24)" };
-    case "已复盘":
-      return { backgroundColor: "rgb(34, 197, 94)" };
-    case "需改进":
-      return { backgroundColor: "rgb(239, 68, 68)" };
-    default:
-      return { backgroundColor: "var(--accent-color, #FF8C24)" };
-  }
+	switch (props.interview.status) {
+		case "待复盘":
+			return { backgroundColor: "var(--accent-color, #FF8C24)" };
+		case "已复盘":
+			return { backgroundColor: "rgb(34, 197, 94)" };
+		case "需改进":
+			return { backgroundColor: "rgb(239, 68, 68)" };
+		default:
+			return { backgroundColor: "var(--accent-color, #FF8C24)" };
+	}
 });
 </script>
 

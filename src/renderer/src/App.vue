@@ -39,14 +39,6 @@ onMounted(() => {
         <button
           class="w-6 h-6 rounded-full bg-white flex items-center justify-center shadow-sm transform transition-transform hover:scale-105 hover:shadow-md text-gray-500"
         >
-          <span class="material-icons" style="font-size: 12px"
-            >notifications</span
-          >
-        </button>
-
-        <button
-          class="w-6 h-6 rounded-full bg-white flex items-center justify-center shadow-sm transform transition-transform hover:scale-105 hover:shadow-md text-gray-500"
-        >
           <span class="material-icons" style="font-size: 12px">settings</span>
         </button>
       </div>

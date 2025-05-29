@@ -5,56 +5,56 @@ import { appTheme } from "../../../config/theme";
 
 // 定义试卷类型
 interface Section {
-  type: string;
-  count: number;
-  pointsPerQuestion: number;
-  description: string;
+	type: string;
+	count: number;
+	pointsPerQuestion: number;
+	description: string;
 }
 
 interface Exam {
-  id: number;
-  title: string;
-  category: string;
-  level: string;
-  duration: string;
-  totalPoints: number;
-  sections: Section[];
-  usageCount: number;
-  status: string;
-  author: string;
-  createdAt: string;
+	id: number;
+	title: string;
+	category: string;
+	level: string;
+	duration: string;
+	totalPoints: number;
+	sections: Section[];
+	usageCount: number;
+	status: string;
+	author: string;
+	createdAt: string;
 }
 
 // 分类列表
 const categories = [
-  "前端开发",
-  "后端开发",
-  "数据库",
-  "算法",
-  "UI设计",
-  "系统架构",
-  "DevOps",
+	"前端开发",
+	"后端开发",
+	"数据库",
+	"算法",
+	"UI设计",
+	"系统架构",
+	"DevOps",
 ];
 
 // 作者列表
 const authors = [
-  "张经理",
-  "李总监",
-  "王架构师",
-  "刘老师",
-  "陈教授",
-  "赵技术总监",
-  "钱部长",
-  "孙主管",
+	"张经理",
+	"李总监",
+	"王架构师",
+	"刘老师",
+	"陈教授",
+	"赵技术总监",
+	"钱部长",
+	"孙主管",
 ];
 
 // 描述模板
 const descriptionTemplates = {
-  选择题: ["单选题", "多选题", "判断题"],
-  编程题: ["算法实现", "功能开发", "代码优化", "问题修复"],
-  设计题: ["系统设计", "架构设计", "界面设计", "数据库设计"],
-  简答题: ["概念解释", "原理阐述", "场景分析"],
-  案例分析: ["实际案例", "最佳实践", "问题诊断"],
+	选择题: ["单选题", "多选题", "判断题"],
+	编程题: ["算法实现", "功能开发", "代码优化", "问题修复"],
+	设计题: ["系统设计", "架构设计", "界面设计", "数据库设计"],
+	简答题: ["概念解释", "原理阐述", "场景分析"],
+	案例分析: ["实际案例", "最佳实践", "问题诊断"],
 };
 
 // 状态
@@ -69,286 +69,325 @@ const router = useRouter();
 
 // 筛选和排序后的考试列表
 const filteredExams = computed(() => {
-  let result = [...exams.value];
+	let result = [...exams.value];
 
-  // 搜索筛选
-  if (searchQuery.value.trim()) {
-    const query = searchQuery.value.toLowerCase();
-    result = result.filter(
-      (exam) =>
-        exam.title.toLowerCase().includes(query) ||
-        exam.category.toLowerCase().includes(query),
-    );
-  }
+	// 搜索筛选
+	if (searchQuery.value.trim()) {
+		const query = searchQuery.value.toLowerCase();
+		result = result.filter(
+			(exam) =>
+				exam.title.toLowerCase().includes(query) ||
+				exam.category.toLowerCase().includes(query),
+		);
+	}
 
-  // 分类筛选
-  if (filterCategory.value) {
-    result = result.filter((exam) => exam.category === filterCategory.value);
-  }
+	// 分类筛选
+	if (filterCategory.value) {
+		result = result.filter((exam) => exam.category === filterCategory.value);
+	}
 
-  // 排序
-  switch (sortBy.value) {
-    case "usage":
-      result.sort((a, b) => b.usageCount - a.usageCount);
-      break;
-    case "difficulty": {
-      const difficultyOrder = { 初级: 1, 中级: 2, 高级: 3 };
-      result.sort(
-        (a, b) =>
-          difficultyOrder[a.level as keyof typeof difficultyOrder] -
-          difficultyOrder[b.level as keyof typeof difficultyOrder],
-      );
-      break;
-    }
-    default:
-      result.sort(
-        (a, b) =>
-          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
-      );
-      break;
-  }
+	// 排序
+	switch (sortBy.value) {
+		case "usage":
+			result.sort((a, b) => b.usageCount - a.usageCount);
+			break;
+		case "difficulty": {
+			const difficultyOrder = { 初级: 1, 中级: 2, 高级: 3 };
+			result.sort(
+				(a, b) =>
+					difficultyOrder[a.level as keyof typeof difficultyOrder] -
+					difficultyOrder[b.level as keyof typeof difficultyOrder],
+			);
+			break;
+		}
+		default:
+			result.sort(
+				(a, b) =>
+					new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+			);
+			break;
+	}
 
-  return result;
+	return result;
 });
 
 // 模拟获取考试数据的API调用
 async function fetchExams(pageNum: number) {
-  isLoading.value = true;
+	isLoading.value = true;
 
-  // 模拟API延迟
-  await new Promise((resolve) => setTimeout(resolve, 0));
+	// 模拟API延迟
+	await new Promise((resolve) => setTimeout(resolve, 0));
 
-  // 模拟考试数据
-  const newExams: Exam[] = [];
-  const startId = (pageNum - 1) * 10 + 1;
+	// 只在第一页插入特定试卷，且只插入一次
+	if (
+		pageNum === 1 &&
+		!exams.value.some((e) => e.title === "Node.js 前端开发工程师面试题")
+	) {
+		exams.value.unshift({
+			id: 9999,
+			title: "Node.js 前端开发工程师面试题",
+			category: "前端开发",
+			level: "中级",
+			duration: "60分钟",
+			totalPoints: 100,
+			sections: [
+				{
+					type: "单选题",
+					count: 3,
+					pointsPerQuestion: 5,
+					description: "涵盖Node.js基础、异步编程、前端构建工具等核心知识点。",
+				},
+				{
+					type: "多选题",
+					count: 3,
+					pointsPerQuestion: 5,
+					description: "考查Node.js模块、事件循环、前端工程化等内容。",
+				},
+				{
+					type: "编程题",
+					count: 4,
+					pointsPerQuestion: 15,
+					description: "涉及异步处理、API设计、构建脚本等实际开发能力。",
+				},
+			],
+			usageCount: Math.floor(Math.random() * 100),
+			status: "pending",
+			author: "张经理",
+			createdAt: new Date().toISOString(),
+		});
+	}
 
-  for (let i = 0; i < 10; i++) {
-    const id = startId + i;
+	// 模拟考试数据
+	const newExams: Exam[] = [];
+	const startId = (pageNum - 1) * 10 + 1;
 
-    // 如果超过50个考试，不再加载
-    if (id > 50) {
-      hasMoreExams.value = false;
-      break;
-    }
+	for (let i = 0; i < 10; i++) {
+		const id = startId + i;
 
-    const category = categories[Math.floor(Math.random() * categories.length)];
-    const level = ["初级", "中级", "高级"][Math.floor(Math.random() * 3)];
-    const usageCount = Math.floor(Math.random() * 100);
-    const author = authors[Math.floor(Math.random() * authors.length)];
+		// 如果超过50个考试，不再加载
+		if (id > 50) {
+			hasMoreExams.value = false;
+			break;
+		}
 
-    // 生成随机考试内容
-    const sections: Section[] = [
-      {
-        type: "选择题",
-        count: Math.floor(Math.random() * 20) + 5,
-        pointsPerQuestion: 2,
-        description:
-          descriptionTemplates.选择题[
-            Math.floor(Math.random() * descriptionTemplates.选择题.length)
-          ],
-      },
-      {
-        type: "编程题",
-        count: Math.floor(Math.random() * 3) + 1,
-        pointsPerQuestion: 20,
-        description:
-          descriptionTemplates.编程题[
-            Math.floor(Math.random() * descriptionTemplates.编程题.length)
-          ],
-      },
-    ];
+		const category = categories[Math.floor(Math.random() * categories.length)];
+		const level = ["初级", "中级", "高级"][Math.floor(Math.random() * 3)];
+		const usageCount = Math.floor(Math.random() * 100);
+		const author = authors[Math.floor(Math.random() * authors.length)];
 
-    // 随机添加其他题型
-    if (Math.random() > 0.5) {
-      sections.push({
-        type: "设计题",
-        count: 1,
-        pointsPerQuestion: 30,
-        description:
-          descriptionTemplates.设计题[
-            Math.floor(Math.random() * descriptionTemplates.设计题.length)
-          ],
-      });
-    }
+		// 生成随机考试内容
+		const sections: Section[] = [
+			{
+				type: "选择题",
+				count: Math.floor(Math.random() * 20) + 5,
+				pointsPerQuestion: 2,
+				description:
+					descriptionTemplates.选择题[
+						Math.floor(Math.random() * descriptionTemplates.选择题.length)
+					],
+			},
+			{
+				type: "编程题",
+				count: Math.floor(Math.random() * 3) + 1,
+				pointsPerQuestion: 20,
+				description:
+					descriptionTemplates.编程题[
+						Math.floor(Math.random() * descriptionTemplates.编程题.length)
+					],
+			},
+		];
 
-    if (Math.random() > 0.7) {
-      sections.push({
-        type: "简答题",
-        count: Math.floor(Math.random() * 5) + 1,
-        pointsPerQuestion: 10,
-        description:
-          descriptionTemplates.简答题[
-            Math.floor(Math.random() * descriptionTemplates.简答题.length)
-          ],
-      });
-    }
+		// 随机添加其他题型
+		if (Math.random() > 0.5) {
+			sections.push({
+				type: "设计题",
+				count: 1,
+				pointsPerQuestion: 30,
+				description:
+					descriptionTemplates.设计题[
+						Math.floor(Math.random() * descriptionTemplates.设计题.length)
+					],
+			});
+		}
 
-    // 计算总分和时长
-    const totalPoints = sections.reduce(
-      (sum, section) => sum + section.count * section.pointsPerQuestion,
-      0,
-    );
-    const duration = Math.floor(totalPoints / 2) + 15; // 简单模拟时长计算
+		if (Math.random() > 0.7) {
+			sections.push({
+				type: "简答题",
+				count: Math.floor(Math.random() * 5) + 1,
+				pointsPerQuestion: 10,
+				description:
+					descriptionTemplates.简答题[
+						Math.floor(Math.random() * descriptionTemplates.简答题.length)
+					],
+			});
+		}
 
-    // 随机状态
-    const status = Math.random() > 0.7 ? "completed" : "pending";
+		// 计算总分和时长
+		const totalPoints = sections.reduce(
+			(sum, section) => sum + section.count * section.pointsPerQuestion,
+			0,
+		);
+		const duration = Math.floor(totalPoints / 2) + 15; // 简单模拟时长计算
 
-    // 生成随机创建日期（过去1年内）
-    const creationDate = new Date();
-    creationDate.setDate(
-      creationDate.getDate() - Math.floor(Math.random() * 365),
-    );
+		// 随机状态
+		const status = Math.random() > 0.7 ? "completed" : "pending";
 
-    newExams.push({
-      id,
-      title: generateTitle(category, id),
-      category,
-      level,
-      duration: `${duration}分钟`,
-      totalPoints,
-      sections,
-      usageCount,
-      status,
-      author,
-      createdAt: creationDate.toISOString(),
-    });
-  }
+		// 生成随机创建日期（过去3个月内）
+		const creationDate = new Date();
+		creationDate.setDate(
+			creationDate.getDate() - Math.floor(Math.random() * 90),
+		);
 
-  exams.value = [...exams.value, ...newExams];
-  isLoading.value = false;
+		newExams.push({
+			id,
+			title: generateTitle(category, id),
+			category,
+			level,
+			duration: `${duration}分钟`,
+			totalPoints,
+			sections,
+			usageCount,
+			status,
+			author,
+			createdAt: creationDate.toISOString(),
+		});
+	}
+
+	exams.value = [...exams.value, ...newExams];
+	isLoading.value = false;
 }
 
 // 生成标题
 function generateTitle(category: string, id: number): string {
-  const prefixes: Record<string, string[]> = {
-    前端开发: [
-      "JavaScript",
-      "React",
-      "Vue",
-      "CSS3",
-      "HTML5",
-      "TypeScript",
-      "Angular",
-    ],
-    后端开发: ["Node.js", "Python", "Java", "Go", "C#", "PHP", "Ruby"],
-    数据库: [
-      "MySQL",
-      "MongoDB",
-      "PostgreSQL",
-      "Redis",
-      "SQLite",
-      "Oracle",
-      "SQL Server",
-    ],
-    算法: [
-      "数据结构",
-      "排序算法",
-      "搜索算法",
-      "动态规划",
-      "贪心算法",
-      "图论",
-      "机器学习",
-    ],
-    UI设计: [
-      "UI基础",
-      "交互设计",
-      "用户体验",
-      "色彩理论",
-      "Figma",
-      "Sketch",
-      "Adobe XD",
-    ],
-    系统架构: [
-      "微服务",
-      "分布式系统",
-      "云原生",
-      "系统设计",
-      "DevOps",
-      "Docker",
-      "Kubernetes",
-    ],
-    DevOps: [
-      "CI/CD",
-      "自动化测试",
-      "Docker",
-      "Kubernetes",
-      "监控",
-      "日志分析",
-      "安全",
-    ],
-  };
+	const prefixes: Record<string, string[]> = {
+		前端开发: [
+			"JavaScript",
+			"React",
+			"Vue",
+			"CSS3",
+			"HTML5",
+			"TypeScript",
+			"Angular",
+		],
+		后端开发: ["Node.js", "Python", "Java", "Go", "C#", "PHP", "Ruby"],
+		数据库: [
+			"MySQL",
+			"MongoDB",
+			"PostgreSQL",
+			"Redis",
+			"SQLite",
+			"Oracle",
+			"SQL Server",
+		],
+		算法: [
+			"数据结构",
+			"排序算法",
+			"搜索算法",
+			"动态规划",
+			"贪心算法",
+			"图论",
+			"机器学习",
+		],
+		UI设计: [
+			"UI基础",
+			"交互设计",
+			"用户体验",
+			"色彩理论",
+			"Figma",
+			"Sketch",
+			"Adobe XD",
+		],
+		系统架构: [
+			"微服务",
+			"分布式系统",
+			"云原生",
+			"系统设计",
+			"DevOps",
+			"Docker",
+			"Kubernetes",
+		],
+		DevOps: [
+			"CI/CD",
+			"自动化测试",
+			"Docker",
+			"Kubernetes",
+			"监控",
+			"日志分析",
+			"安全",
+		],
+	};
 
-  const suffixes = [
-    "知识考核试卷",
-    "能力评估试卷",
-    "岗位认证试卷",
-    "技能测试试卷",
-    "水平测验试卷",
-  ];
+	const suffixes = [
+		"知识考核试卷",
+		"能力评估试卷",
+		"岗位认证试卷",
+		"技能测试试卷",
+		"水平测验试卷",
+	];
 
-  const prefix =
-    prefixes[category][Math.floor(Math.random() * prefixes[category].length)];
-  const suffix = suffixes[Math.floor(Math.random() * suffixes.length)];
+	const prefix =
+		prefixes[category][Math.floor(Math.random() * prefixes[category].length)];
+	const suffix = suffixes[Math.floor(Math.random() * suffixes.length)];
 
-  return `${prefix}${suffix}`;
+	return `${prefix}${suffix}`;
 }
 
 // 计算考试总题数
 function getTotalQuestions(exam: Exam): number {
-  return exam.sections.reduce((total, section) => total + section.count, 0);
+	return exam.sections.reduce((total, section) => total + section.count, 0);
 }
 
 // 获取部分描述
 function getSectionDescription(section: Section): string {
-  return `${section.description}，每题${section.pointsPerQuestion}分，共${section.count * section.pointsPerQuestion}分`;
+	return `${section.description}，每题${section.pointsPerQuestion}分，共${section.count * section.pointsPerQuestion}分`;
 }
 
 // 数字转中文
 function numberToChinese(num: number): string {
-  const chineseNumbers = [
-    "一",
-    "二",
-    "三",
-    "四",
-    "五",
-    "六",
-    "七",
-    "八",
-    "九",
-    "十",
-  ];
-  if (num <= 10) {
-    return chineseNumbers[num - 1];
-  }
-  return num.toString();
+	const chineseNumbers = [
+		"一",
+		"二",
+		"三",
+		"四",
+		"五",
+		"六",
+		"七",
+		"八",
+		"九",
+		"十",
+	];
+	if (num <= 10) {
+		return chineseNumbers[num - 1];
+	}
+	return num.toString();
 }
 
 // 格式化日期
 function formatDate(dateString: string): string {
-  const date = new Date(dateString);
-  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+	const date = new Date(dateString);
+	return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
 }
 
 // 加载更多考试
 function loadMoreExams(): void {
-  page.value++;
-  fetchExams(page.value);
+	page.value++;
+	fetchExams(page.value);
 }
 
 // 开始考试
 function startExam(examId: number): void {
-  console.log(`开始做题: ${examId}`);
-  router.push(`/algorithm-training/paper/${examId}`);
+	console.log(`开始做题: ${examId}`);
+	router.push(`/algorithm-training/paper/${examId}`);
 }
 
 // 返回上一页
 function goBack(): void {
-  router.push("/");
+	router.push("/");
 }
 
 onMounted(() => {
-  // 初始加载
-  fetchExams(page.value);
+	// 初始加载
+	fetchExams(page.value);
 });
 </script>
 
@@ -535,7 +574,6 @@ onMounted(() => {
                 class="bg-gray-50 border-t border-gray-200 p-3 flex justify-between items-center"
               >
                 <div class="text-xs text-gray-500">
-                  <div>出题人: {{ exam.author }}</div>
                   <div>创建日期: {{ formatDate(exam.createdAt) }}</div>
                 </div>
                 <button

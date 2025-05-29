@@ -2,36 +2,36 @@
 import { appTheme } from "../../../config/theme";
 
 defineProps({
-  meetingTitle: {
-    type: String,
-    default: "前端开发模拟面试",
-  },
-  meetingId: {
-    type: String,
-    default: "389 475 1029",
-  },
-  duration: {
-    type: String,
-    default: "00:32:15",
-  },
-  pageTitle: {
-    type: String,
-    default: "模拟面试",
-  },
+	meetingTitle: {
+		type: String,
+		default: "前端开发模拟面试",
+	},
+	meetingId: {
+		type: String,
+		default: "389 475 1029",
+	},
+	duration: {
+		type: String,
+		default: "00:32:15",
+	},
+	pageTitle: {
+		type: String,
+		default: "模拟面试",
+	},
 });
 
 const emit = defineEmits(["manage", "end", "back"]);
 
 const handleManage = () => {
-  emit("manage");
+	emit("manage");
 };
 
 const handleEnd = () => {
-  emit("end");
+	emit("end");
 };
 
 const handleBack = () => {
-  emit("back");
+	emit("back");
 };
 </script>
 

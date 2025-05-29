@@ -4,19 +4,19 @@ import vue from "@vitejs/plugin-vue";
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
-  main: {
-    plugins: [externalizeDepsPlugin()],
-  },
-  preload: {
-    plugins: [externalizeDepsPlugin()],
-  },
-  renderer: {
-    resolve: {
-      alias: {
-        "@renderer": resolve("src/renderer/src"),
-        "@": resolve("src/renderer/src"),
-      },
-    },
-    plugins: [vue(), tailwindcss()],
-  },
+	main: {
+		plugins: [externalizeDepsPlugin()],
+	},
+	preload: {
+		plugins: [externalizeDepsPlugin()],
+	},
+	renderer: {
+		resolve: {
+			alias: {
+				"@renderer": resolve("src/renderer/src"),
+				"@": resolve("src/renderer/src"),
+			},
+		},
+		plugins: [vue(), tailwindcss()],
+	},
 });

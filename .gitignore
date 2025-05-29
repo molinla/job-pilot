@@ -5,3 +5,8 @@ out
 .eslintcache
 *.log*
 .idea
+# Environment variables
+.env
+.env.local
+.env.development
+.env.production

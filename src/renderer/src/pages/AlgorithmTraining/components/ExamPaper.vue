@@ -123,7 +123,7 @@ const navigateToQuestion = (id) => {
           :style="`color: ${appTheme.neutral[700]}; border-color: ${appTheme.neutral[200]}`"
         >
           <div
-            class="w-2 h-6 rounded-full mr-2"
+            class="w-1 h-6 mr-2"
             :style="`background-color: ${appTheme.primary.base}`"
           ></div>
           第一部分：单选题（每题{{ exam.singleChoiceScore }}分，共{{
@@ -158,7 +158,7 @@ const navigateToQuestion = (id) => {
           :style="`color: ${appTheme.neutral[700]}; border-color: ${appTheme.neutral[200]}`"
         >
           <div
-            class="w-2 h-6 rounded-full mr-2"
+            class="w-1 h-6 mr-2"
             :style="`background-color: ${appTheme.primary.base}`"
           ></div>
           第二部分：多选题（每题{{ exam.multipleChoiceScore }}分，共{{
@@ -190,7 +190,7 @@ const navigateToQuestion = (id) => {
           :style="`color: ${appTheme.neutral[700]}; border-color: ${appTheme.neutral[200]}`"
         >
           <div
-            class="w-2 h-6 rounded-full mr-2"
+            class="w-1 h-6 mr-2"
             :style="`background-color: ${appTheme.primary.base}`"
           ></div>
           第三部分：编程题（每题{{ exam.codingScore }}分，共{{

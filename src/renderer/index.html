@@ -1,16 +1,57 @@
 <!doctype html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>求职助手</title>
-    <link
-      href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet"
-    />
-  </head>
 
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.ts"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <title>求职助手</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <!-- Monaco Editor CDN -->
+  <script>
+    // 避免与Electron的require冲突
+    var amdRequire = undefined;
+
+    // 定义全局Monaco环境
+    window.MonacoEnvironment = {
+      getWorkerUrl: function (_, label) {
+        return `data:text/javascript;charset=utf-8,${encodeURIComponent(`
+          self.MonacoEnvironment = {
+            baseUrl: 'https://cdn.jsdelivr.net/npm/monaco-editor@0.43.0/min/'
+          };
+          importScripts('https://cdn.jsdelivr.net/npm/monaco-editor@0.43.0/min/vs/base/worker/workerMain.js');`
+        )}`;
+      }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.43.0/min/vs/loader.js"></script>
+  <script>
+    // 加载Monaco编辑器
+    window.onload = function () {
+      // 将require保存到amdRequire中
+      if (typeof require !== 'undefined') {
+        amdRequire = require;
+      }
+
+      // 使用AMD加载器的require
+      amdRequire = amdRequire || require;
+
+      amdRequire.config({
+        paths: {
+          vs: 'https://cdn.jsdelivr.net/npm/monaco-editor@0.43.0/min/vs'
+        }
+      });
+
+      // 加载monaco编辑器
+      amdRequire(['vs/editor/editor.main'], function () {
+        // Monaco加载完成，触发一个事件
+        window.dispatchEvent(new Event('monaco-editor-loaded'));
+      });
+    };
+  </script>
+</head>
+
+<body>
+  <div id="app"></div>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+
 </html>
